@@ -24,10 +24,22 @@ const Navbar = () => {
                         <Link className={`nav-link ${location.pathname==="/about"?"active":""}`} to="/about">About</Link>
                         </li>
                     </ul>
-                   {!localStorage.getItem('token')? <form className="d-flex">
+                   {/* {!localStorage.getItem('token')? <form className="d-flex">
                         <Link className='btn btn-primary mx-1' to='/login' role='button'>Login</Link>
                         <Link className='btn btn-primary mx-1' to='/signup' role='button'>Signup</Link>
-                    </form>: <button onClick={handleLogout}className="btn btn-primary">Logout</button>}
+                    </form>: <button onClick={handleLogout}className="btn btn-primary">Logout</button>} */}
+                    {!localStorage.getItem('token') ? (
+                        <form className="d-flex">
+                            <Link className='btn btn-primary mx-1' to='/login' role='button'>Login</Link>
+                            <Link className='btn btn-primary mx-1' to='/signup' role='button'>Signup</Link>
+                        </form>
+                    ) : (
+                        <div>
+                            <button onClick={handleLogout} className="btn btn-primary mx-1">Logout</button>
+                            <Link className='btn btn-primary mx-1' to='/change-password' role='button'>Change Password</Link>
+                        </div>
+                    )}
+
                     </div>
                 </div>
             </nav>

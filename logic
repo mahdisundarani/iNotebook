@@ -1,0 +1,241 @@
+// change pass react logic 
+
+// import React, { useState } from 'react';
+// import { useNavigate } from "react-router-dom";
+
+// const ChangePassword = (props) => {
+//     const [formData, setFormData] = useState({
+//         oldPassword: '',
+//         newPassword: '',
+//         confirmPassword: ''
+//     });
+//     const [message, setMessage] = useState('');
+//     const navigate = useNavigate();
+//     const token = localStorage.getItem('token'); 
+//     const { oldPassword, newPassword, confirmPassword } = formData;
+
+//     const handleChange = (e) => {
+//         setFormData({ ...formData, [e.target.name]: e.target.value });
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         if (newPassword !== confirmPassword) {
+//             setMessage('New password and confirm password do not match');
+//             return;
+//         }
+
+//         try {
+//             const response = await fetch('http://localhost:5000/api/auth/change-password', {
+//                 method: 'POST',
+//                 headers: {
+//                   'Content-Type': 'application/json',
+//                   'Authorization': `${token}` // Include the JWT token in the Authorization header
+//               }, 
+//                 body: JSON.stringify({
+//                     oldPassword,
+//                     newPassword
+//                 })
+//             });
+
+//             const data = await response.json();
+
+//             if (response.ok) {
+//               props.showAlert("password changed successfully ", "success");
+//               navigate("/login");
+//             }
+//             if (!response.ok) {
+//                 throw new Error(data.message || 'Failed to change password');
+//             }
+
+//             setMessage(data.message);
+//             setFormData({ oldPassword: '', newPassword: '', confirmPassword: '' });
+            
+//         } catch (error) {
+//             setMessage(error.message);
+//           }
+//     };
+
+//     return (
+//         <div className='mt-2'>
+//             <h2 className='my-2'>Change Password</h2>
+//             <form onSubmit={handleSubmit}>
+//                 <div className='mb-3'>
+//                     <label className='form-label' htmlFor="oldPassword">Old Password:</label>
+//                     <input
+//                         type="password"
+//                         className='form-control'
+//                         id="oldPassword"
+//                         name="oldPassword"
+//                         value={oldPassword}
+//                         onChange={handleChange}
+//                         required
+//                     />
+//                 </div>
+//                 <div className='mb-3'>
+//                     <label  className='form-label' htmlFor="newPassword">New Password:</label>
+//                     <input
+//                         className='form-control'
+//                         type="password"
+//                         id="newPassword"
+//                         name="newPassword"
+//                         value={newPassword}
+//                         onChange={handleChange}
+//                         required
+//                     />
+//                 </div>
+//                 <div className='mb-3'>
+//                     <label className='form-label' htmlFor="confirmPassword">Confirm Password:</label>
+//                     <input
+//                         className='form-control'
+//                         type="password"
+//                         id="confirmPassword"
+//                         name="confirmPassword"
+//                         value={confirmPassword}
+//                         onChange={handleChange}
+//                         required
+//                     />
+//                 </div>
+//                 <button className='btn btn-primary' type="submit">Change Password</button>
+//             </form>
+//             {message && <p>{message}</p>}
+//         </div>
+//     );
+// };
+
+// export default ChangePassword;
+
+
+
+
+
+
+
+// change pass api logic
+
+
+// router.post('/change-password', async (req, res) => {
+//     const { oldPassword, newPassword } = req.body;
+//     const token = req.header('Authorization');
+  
+//     if (!token) {
+//         return res.status(401).json({ message: 'Unauthorized' });
+//     }
+  
+//     try {
+//         const decoded = jwt.verify(token, JWT_SECRET);
+//         const userId = decoded.user.id;
+  
+//         // Fetch user from database
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+  
+//         // Compare old password
+//         const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+//         if (!isPasswordValid) {
+//             return res.status(401).json({ message: 'Invalid old password' });
+//         }
+  
+//         // Hash new password
+//         const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+//         // Update password in the database
+//         user.password = hashedPassword;
+//         await user.save();
+  
+//         res.status(200).json({ message: 'Password changed successfully' });
+//     } catch (error) {
+//         console.error(error);
+//         if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+//             return res.status(401).json({ message: 'Invalid token' });
+//         }
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+//   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// false logic
+import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+
+
+// const ChangePass = (props) => {
+//   const [credentials, setCredentials] = useState({ password: ""});
+//   const navigate = useNavigate();
+
+//   const handlSubmit = async (e) => {
+//     e.preventDefault();
+//     const response = await fetch(`http://localhost:5000/api/auth/change-password`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         password: credentials.password,
+//       }),
+//     });
+//     const json = await response.json();
+//     console.log(json);
+//     if (!json.success) {
+//       // save the auth token and redirect
+//       props.showAlert("password changed successfully ", "success");
+//       navigate("/login");
+//     } 
+//   };
+
+//   const onChange = (e) => {
+//     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+//   };
+  
+//   return (
+//     <div className="mt-2">
+//       <h2 className="my-3">Change your password</h2>
+//       <form onSubmit={handlSubmit}>
+//         <div className="mb-3">
+//           <label htmlFor="password" className="form-label">
+//           New password 
+//           </label>
+//           <input
+//             type="password"
+//             className="form-control"
+//             id="password"
+//             value={credentials.password}
+//             onChange={onChange}
+//             name="password"
+//             aria-describedby="emailHelp"
+//           />
+//         </div>
+//         <button type="submit" className="btn btn-primary">
+//           submit
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default ChangePass;
+

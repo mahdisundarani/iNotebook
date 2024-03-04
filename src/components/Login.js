@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+
   const handlSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:5000/api/auth/login`, {
@@ -27,9 +29,11 @@ const Login = (props) => {
       props.showAlert("invalid detials ", "danger");
     }
   };
+
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  
   return (
     <div className="mt-2">
       <h2 className="my-3">Login in to continue to iNotebook</h2>
@@ -63,6 +67,9 @@ const Login = (props) => {
             onChange={onChange}
             name="password"
           />
+        </div>
+        <div className="mb-3">
+        <Link to={"/forgotpass"}>Forgot password</Link>
         </div>
         <button type="submit" className="btn btn-primary">
           Submit
